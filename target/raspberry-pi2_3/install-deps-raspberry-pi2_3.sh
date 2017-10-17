@@ -65,7 +65,7 @@ sudo apt-get remove bluez
 cd ${ANT_REPO_DIR}/dep/bluez-4.101
 ./configure --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc \
   --localstatedir=/var --libexecdir=/lib 
-make 
+make -j4
 sudo make install
 sudo systemctl unmask bluetooth
 sudo service bluetooth start
@@ -79,7 +79,7 @@ print_progress 5 "Build and install libxml2-2.9.4-rc2..."
 cd ${ANT_REPO_DIR}/dep/libxml2-2.9.4-rc2
 ./autogen.sh
 ./configure --prefix=/usr/local/xml
-make
+make -j4
 sudo make install
 
 # Step 6. Build and install libuv-v1.7.5
@@ -87,7 +87,7 @@ print_progress 6 "Build and install libuv-v1.7.5..."
 cd ${ANT_REPO_DIR}/dep/libuv-v1.7.5
 sh autogen.sh
 ./configure
-make
+make -j4
 make check
 sudo make install
 
@@ -98,7 +98,7 @@ sudo cp ${ANT_REPO_DIR}/dep/ant-dbus-config/ant.conf /etc/dbus-1/system.d/ant.co
 # Step 8. Install wpa_supplicant, wpa_cli and deletesem
 print_progress 8 "Install wpa_supplicant, wpa_cli and deletesem..."
 cd ${ANT_REPO_DIR}/dep/hostap/wpa_supplicant
-make
+make -j4
 cd ${ANT_REPO_DIR}/dep/deletesem
 gcc -o deletesem deletesem.c -lpthread
 
@@ -123,7 +123,7 @@ sudo npm install -g node-gyp
 # Step 11. Install Gstreamer RPI camera source element
 cd ${ANT_REPO_DIR}/dep/gst-rpicamsrc
 ./autogen.sh --prefix=/usr --libdir=/usr/lib/arm-linux-gnueabihf/
-make
+make -j4
 sudo make install
 
 WARN_COLO="\033[31;47m"

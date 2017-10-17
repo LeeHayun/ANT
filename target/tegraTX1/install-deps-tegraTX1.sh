@@ -67,7 +67,7 @@ sudo apt-get remove bluez
 cd ${ANT_REPO_DIR}/dep/bluez-4.101
 ./configure --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc \
   --localstatedir=/var --libexecdir=/lib
-make
+make -j6
 sudo make install
 # Unmask and restart bleutooth daemon
 sudo systemctl unmask bluetooth
@@ -82,7 +82,7 @@ print_progress 5 "Build and install libxml2-2.9.4-rc2..."
 cd ${ANT_REPO_DIR}/dep/libxml2-2.9.4-rc2
 ./autogen.sh
 ./configure --prefix=/usr/local/xml
-make
+make -j6
 sudo make install
 
 # Step 6. Build and install libuv-v1.7.5
@@ -90,7 +90,7 @@ print_progress 6 "Build and install libuv-v1.7.5..."
 cd ${ANT_REPO_DIR}/dep/libuv-v1.7.5
 sh autogen.sh
 ./configure
-make
+make -j6
 make check
 sudo make install
 
@@ -102,7 +102,7 @@ sudo cp ${ANT_REPO_DIR}/dep/ant-dbus-config/ant.conf /etc/dbus-1/system.d/ant.co
 print_progress 8 "Install wpa_supplicant, wpa_cli and deletesem..."
 
 cd ${ANT_REPO_DIR}/dep/hostap/wpa_supplicant
-make
+make -j6
 cd ${ANT_REPO_DIR}/dep/deletesem
 gcc -o deletesem deletesem.c -lpthread
 
