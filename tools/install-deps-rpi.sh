@@ -41,10 +41,11 @@ print_progress() {
 print_progress 1 "Install dependent packages..."
 sudo apt-get update
 
+sudo apt-get -y install curl
 # Step 9. Build and install nodejs-4.0.0
 print_progress 9 "Build and install nodejs-4.0.0..."
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-sudo apt-get install nodejs
+sudo apt-get -y install nodejs
 
 # Step 10. Install nan, node-gyp package
 print_progress 10 "Install nan, node-gyp package..."
