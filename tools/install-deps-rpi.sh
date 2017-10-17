@@ -42,6 +42,7 @@ print_progress 1 "Install dependent packages..."
 sudo apt-get update
 
 sudo apt-get -y install curl
+uname -a
 # Step 9. Build and install nodejs-4.0.0
 print_progress 9 "Build and install nodejs-4.0.0..."
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
