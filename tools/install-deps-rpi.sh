@@ -40,19 +40,32 @@ print_progress() {
 # Step 1. Install packages by apt-get
 print_progress 1 "Install dependent packages..."
 sudo apt-get update
+
+# Step 9. Build and install nodejs-4.0.0
+print_progress 9 "Build and install nodejs-4.0.0..."
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install nodejs
+
+# Step 10. Install nan, node-gyp package
+print_progress 10 "Install nan, node-gyp package..."
+cd ${ANT_REPO_DIR}
+which npm
+npm install nan
+sudo npm install -g node-gyp
+
+
 sudo apt-get -y install make g++-4.8                                          \
   wiringpi libdbus-1-dev glib-2.0 libdbus-glib-1-2 bison byacc                 \
   libdbus-glib-1-2-dbg libdbus-glib-1-dev zip sqlite3 libsqlite3-dev cmake    \
-  libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev git  \
-  python-dev python-numpy libjpeg-dev libpng-dev libtiff-dev libjasper-dev    \
-  libdc1394-22-dev automake libtool libssl-dev libnl-3-dev libnl-genl-3-dev   \
-  python3 udhcpd libv4l-dev gstreamer1.0 libopencv-dev
+  libgtk2.0-dev pkg-config git  \
+  automake libtool libssl-dev libnl-3-dev libnl-genl-3-dev   \
+  python3 udhcpd libv4l-dev gstreamer1.0 libopencv-dev libxml2 curl systemd
 
 # Get the absolute path of ANT repository directory
 ANT_REPO_DIR=$(dirname "$0")/..
 eval ANT_REPO_DIR=`readlink --canonicalize ${ANT_REPO_DIR}`
 
-# Step 2. Download submodules
+# Step 2. Download submodule
 print_progress 2 "Download submodules..."
 git submodule sync
 git submodule update --init --recursive
@@ -76,21 +89,13 @@ sudo service bluetooth start
 print_progress 4 "Set udhcpd config..."
 sudo touch /var/lib/misc/udhcpd.leases
 
-# Step 5. Build and install libxml2-2.9.4-rc2
-print_progress 5 "Build and install libxml2-2.9.4-rc2..."
-cd ${ANT_REPO_DIR}/dep/libxml2-2.9.4-rc2
-./autogen.sh
-./configure --prefix=/usr/local/xml
-make -j4
-sudo make install
-
 # Step 6. Build and install libuv-v1.7.5
 print_progress 6 "Build and install libuv-v1.7.5..."
 cd ${ANT_REPO_DIR}/dep/libuv-v1.7.5
 sh autogen.sh
 ./configure
 make -j4
-make check
+#make check
 sudo make install
 
 # Step 7. Copy dbus config file
@@ -110,19 +115,8 @@ sudo cp ${ANT_REPO_DIR}/dep/hostap/wpa_supplicant/wpa_cli /usr/bin/ant-deps/
 sudo cp ${ANT_REPO_DIR}/dep/deletesem/deletesem /usr/bin/ant-deps/
 sudo chmod +x /usr/bin/ant-deps/*
 
-# Step 9. Build and install nodejs-4.0.0
-print_progress 9 "Build and install nodejs-4.0.0..."
-cd ${ANT_REPO_DIR}/dep/nodejs-4.0.0
-./configure
-make -j4
-sudo make install
-
-# Step 10. Install nan, node-gyp package
-cd ${ANT_REPO_DIR}
-npm install nan
-sudo npm install -g node-gyp
-
 # Step 11. Install Gstreamer RPI camera source element
+print_progress 11 "Install Gstreamer RPI camera source element..."
 cd ${ANT_REPO_DIR}/dep/gst-rpicamsrc
 ./autogen.sh --prefix=/usr --libdir=/usr/lib/arm-linux-gnueabihf/
 make -j4
