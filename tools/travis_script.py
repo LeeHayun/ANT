@@ -23,7 +23,7 @@ DOCKER_NAME = 'ant_docker'
 def run_docker():
     ex.check_run_cmd('docker', ['run', '-dit', '--name', DOCKER_NAME, '-v',
         '%s:%s' % (TRAVIS_BUILD_PATH, DOCKER_ANT_PATH),
-        'sedden/rpi-raspbian-qemu:wheezy'])
+        'sedden/rpi-raspbian-qemu:jessie'])
 
 def exec_docker(cwd, cmd):
     exec_cmd = 'cd %s && ' % cwd + ' '.join(cmd)

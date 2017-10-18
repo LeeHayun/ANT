@@ -1,7 +1,7 @@
 # From resin/rpi-raspbian:wheezy
 # COPY qemu-arm-static /usr/bin/qemu-arm-static
 
-FROM sedden/rpi-raspbian-qemu:wheezy
+FROM sedden/rpi-raspbian-qemu:jessie
 
 RUN apt-get update && apt-get install python vim git
 RUN mkdir -p /home/pi/ANT
