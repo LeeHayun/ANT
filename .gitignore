@@ -25,3 +25,8 @@ data
 *.swp
 .DS_Store
 .vscode
+
+dep/ComputeLibrary/build/examples
+dep/ComputeLibrary/build/opencl-1.2-stubs
+dep/ComputeLibrary/build/src
+dep/ComputeLibrary/build/tests
