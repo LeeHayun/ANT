@@ -46,15 +46,15 @@ sudo apt-get -y install libdbus-1-dev libglib2.0-dev bison byacc          \
   libnl-genl-3-dev udhcpd libopencv-dev libxml2-dev                       \
   libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
   gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav   \
-  gstreamer1.0-tools libgstreamer-plugins-base1.0-dev gstreamer1.0-opencv 
+  gstreamer1.0-tools libgstreamer-plugins-base1.0-dev gstreamer1.0-opencv scons
 # glib-2.0
 
 ## Caffe Library Dependency
-sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev          \
-  libhdf5-serial-dev protobuf-compiler libatlas-base-dev libopenblas-dev      \
-  libgflags-dev libgoogle-glog-dev liblmdb-dev python-numpy python-scipy      \
-  python-yaml python-six python-pip
-sudo apt-get -y install --no-install-recommends libboost-all-dev
+#sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev          \
+#  libhdf5-serial-dev protobuf-compiler libatlas-base-dev libopenblas-dev      \
+#  libgflags-dev libgoogle-glog-dev liblmdb-dev python-numpy python-scipy      \
+#  python-yaml python-six python-pip
+#sudo apt-get -y install --no-install-recommends libboost-all-dev
 
 # Get the absolute path of ANT repository directory
 ANT_REPO_DIR=$(dirname "$0")/../..
@@ -122,18 +122,23 @@ sudo chmod +x /usr/bin/ant-deps/*
 #sudo npm install -g node-gyp
 
 # Step 11. Install Gstreamer RPI camera source element
-cd ${ANT_REPO_DIR}/dep/gst-rpicamsrc
-./autogen.sh --prefix=/usr --libdir=/usr/lib/arm-linux-gnueabihf/
-make -j4
-sudo make install
+#cd ${ANT_REPO_DIR}/dep/gst-rpicamsrc
+#./autogen.sh --prefix=/usr --libdir=/usr/lib/arm-linux-gnueabihf/
+#make -j4
+#sudo make install
 
 # Step 12. Install Caffe Framework
-cd ${ANT_REPO_DIR}/dep/caffe
-cp Makefile.config.rpi Makefile.config
-make -j4 all distribute
+#cd ${ANT_REPO_DIR}/dep/caffe
+#cp Makefile.config.rpi Makefile.config
+#make -j4 all distribute
 
-sudo cp -a distribute/lib/libcaffe.so* /usr/lib
-sudo cp -r distribute/include/caffe/ /usr/include
+#sudo cp -a distribute/lib/libcaffe.so* /usr/lib
+#sudo cp -r distribute/include/caffe/ /usr/include
+
+# Install ComputeLibrary
+cd ${ANT_REPO_DIR}/dep/ComputeLibrary
+sudo cp build/libarm_compute*.so /usr/lib
+sudo cp -r arm_compute /usr/include/
 
 # Step 13. Install FANN Library
 cd ${ANT_REPO_DIR}/dep/fann
